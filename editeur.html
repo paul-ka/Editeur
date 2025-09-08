@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .pop:popover-open {
+          height: 400px;
+          width: 300px;
+          border-radius: 10px;
+          display : block;
+      }
+      .close {
+          display: flex;
+          flex-direction: row-reverse;
+      }
+      .pop button{
+          border-radius: 20%;
+          border: none;
+          background-color: rgb(132, 118, 255);
+          padding: 5px;
+          margin: 3px;
+      }
+      .pop::backdrop {
+          background : rgba(10, 10, 10, 0.2);
+      }
+      .close button{
+        background-color: red;
+      }
+    </style>
+
+    <script>
+        const menu = {
+            "html":"<!DOCTYPE html>\n<html lang='fr'>\n<head>\n<meta charset='UTF-8'>\n<meta name='viewport' content=width='device-width, initial-scale=1.0'>\n<title>Document</title>\n</head>\n<body>\n</body>\n</html>",
+            "style":"<style>\n</style>",
+            "script":"<script></ script>",
+            "a":"<a href=\"\"></a>",
+            "button":"<button>\n</button>",
+            "details":"<details>\n<summary>\n</summary>\n</details>",
+            "dialog":"<dialog></dialog>",
+            "div":"<div></div>",
+            "form":"<form action=\"\" method=\"\">\n</form>",
+            "h1":"<h1></h1>",
+            "h2":"<h2></h2>",
+            "h3":"<h3></h3>",
+            "img":"<img src=\"\">",
+            "input/button":"<input type=\"button\"  />",
+            "input/checkbox":"<input type=\"checkbox\" cheched />",
+            "input/date":"<input type=\"date\" />",
+            "input/email":"<input type=\"email|file|number|password|radio|range|reset|submit|tel|text|url\" cheched />",
+            "input/file":"<input type=\"file\" />",
+            "input/number":"<input type=\"number\" />",
+            "input/password":"<input type=\"password\" />",
+            "input/radio":"<input type=\"radio\"  />",
+            "input/range":"<input type=\"range\"  />",
+            "input/reset":"<input type=\"reset\"  />",
+            "input/submit":"<input type=\"submit\"  />",
+            "input/tel":"<input type=\"tel\"  />",
+            "input/text":"<input type=\"text\"  />",
+            "input/url":"<input type=\"url\"  />",
+            "li":"<li></li>",
+            "ol":"<ol></ol>",
+            "p":"<p></p>",
+            "progress":"<progress max=\"100\" value=\"0\"></progress>",
+            "section":"<section></section>",
+            "select":"<select name=\"\">\n<option value=\"\"></option>\n</select>",
+            "span":"<span></span>",
+            "table":"<table></table>",
+            "td":"<td></td>",
+            "th":"<th scope =\"col|row\"></th>",
+            "textarea":"<textarea name=\"\" rows=\"\" cols=\"\"></textarea>",
+            "tr":"<tr></tr>",
+            "ul":"<ul></ul>",
+            "video":"<video controls width=\"\"><source src=\"\" /></video>",
+            "popover":"<div id=\"pop\" popover=\"manual\">\n<div class=\"close\"><button popovertarget=\"pop\" popovertargetaction=\"hide\"> X </button></div>\n<div>\nContenu de la popup\n</div>\n</div>\n<button popovertarget=\"pop\" popovertargetaction=\"show\">Popup</button>",
+            "font-family":"font-family:\"\";",
+            "font-size":"font-size:;",
+            "color":"color: #FFFFFF;",
+            "font-style":"font-style: normal|italic|oblique",
+            "font-weight":"font-weight: normal|bold|bolder",
+            "text-decoration":"text-decoration: none|underline|line-through|overline",
+            "text-align":"text-align: left|center|right|justify",
+            "background":"background: red url() no-repeat scroll center top;",
+            "background-color":"background-color: #FFFFFF;",
+            "background-image":"background-image: url();",
+            "background-position":"background-position: left|center|right top|center|bottom;",
+            "margin":"margin:;",
+            "padding":"padding:;",
+            "border":"border: px none|solid|dotted|dashed|double #FFFFFF;",
+            "border-color":"border-color: #FFFFFF;",
+            "cursor":"cursor: auto|pointer|defaut|crosshair|move|help|wait;",
+            "vertical-align":"vertical-align: baseline|top|middle|bottom;",
+            "display":"display: none|block|inline|table|flex|grid;",
+            "cursor":"bcursor: auto|pointer|defaut|crosshair|move|help|wait;",
+            "overflow":"overflow: hidden|auto|visible;",
+            "border-radius":"border-radius: px;",
+            "if":"if(==|<|>|!=|<=|>=){}",
+            "switch":"switch(){\ncase \"\":\nbreak;\ndefault:\n}",
+            "for":"for (let i = 0; i < ; i++) {\n}",
+            "while":"while(){\n}",
+            ".length":".length",
+            ".toUpperCase":".toUpperCase()",
+            ".toLowerCase":".toLowerCase()",
+            ".includes":".includes(\"\")",
+            ".startsWith":".startsWith(\"\")",
+            ".endsWith":".endsWith(\"\")",
+            ".slice":".slice(,)",
+            ".replace":".replace(\"\", \"\")",
+            ".trim":".trim()",
+            ".split":".split(\"\")",
+            "``":"``",
+            "Math.PI":"Math.PI",
+            "Math.round":"Math.round()",
+            "Math.ceil":"Math.ceil()",
+            "Math.floor":"Math.floor()",
+            "Math.pow":"Math.pow(,)",
+            "Math.sqrt":"Math.sqrt()",
+            "Math.random":"Math.random()",
+            "Number":"Number(\"\")",
+            ".toFixed":".toFixed()",
+            ".push":".push('')",
+            ".pop":".pop()",
+            ".shift":".shift()",
+            ".indexOf":".indexOf('')",
+            ".find":".find(x=> x % 2 === 0)",
+            ".forEach":".forEach(function(item,index){\n})",
+            ".filter":".filter(x=> x % 2 === 0)",
+            ".join":".join('')",
+            "getElementById":"getElementById()",
+            "getElementsByClassName":"getElementsByClassName()",
+            "getElementsByTagName":"getElementsByTagName()",
+            "querySelector":"querySelector()",
+            "querySelectorAll":"querySelectorAll()",
+            ".textContent ":".textContent ",
+            ".innerHTML":".innerHTML",
+            ".getAttribute":".getAttribute()",
+            ".setAttribute":".setAttribute(,)",
+            ".removeAttribute":".removeAttribute",
+            ".addEventListener":".addEventListener('', )",
+            ".removeEventListener":".removeEventListener('', )",
+            ".createElement":".createElement('')",
+            ".appendChild":".appendChild()",
+            ".removeChild":".removeChild()",
+            ".insertBefore":".insertBefore(, )",
+            ".classList.add":".classList.add('')",
+            ".classList.remove":".classList.remove('')",
+            ".classList.toggle":".classList.toggle('')",
+            ".parentNode":".parentNode",
+            ".childNodes":".childNodes",
+            ".children":".children",
+            "XMLHttpRequest":"new XMLHttpRequest();",
+            ".open":".open('GET|POST|PUT|DELETE', '', true);",
+            ".send":".send();",
+            "lire XMLHttp...":"xhr.onreadystatechange = function() {\nif (xhr.readyState === XMLHttpRequest.DONE) {\nif (xhr.status === 200) {\n} else {\n}\n}\n};",
+            "fetch GET":"fetch('')\n.then(response => {\nif (!response.ok) {\nthrow new Error('Problème de réseau');\n}\nreturn response.json();\n})\n.then(data => {\n\n})\n.catch(error => {\nconsole.error('Il y a eu un problème avec l\'opération fetch: ' + error.message);\n});",
+            "fetch POST":"fetch('', {\nmethod: 'POST', \nheaders: {\n'Content-Type': 'application/json',\n},\nbody: JSON.stringify({ \nkey: 'value'\n})\n})\n.then(response => {\nif (!response.ok) {\nthrow new Error('Problème de réseau');\n}\nreturn response.json();\n})\n.then(data => {\n\n})\n.catch(error => {\nconsole.error('Il y a eu un problème avec l\'opération fetch: ' + error.message);\n});",
+            "ls.clear":"localStorage.clear();",
+            "ls.getItem":"localStorage.getItem('');",
+            "ls.removeItem":"localStorage.removeItem('');",
+            "ls.setItem":"localStorage.setItem('', '');",
+            "ss.clear:":"sessionStorage.clear();",
+            "ss.getItem":"sessionStorage.getItem('');",
+            "ss.removeItem":"sessionStorage.removeItem('');",
+            "ss.setItem":"sessionStorage.setItem('', '');",
+            "iDB.open":"indexedDB.open('', 1);",
+            ".onupgradeneeded":".onupgradeneeded = function(event) {\n}",
+            ".createObjectStore":".createObjectStore('', { keyPath: '' });",
+            ".transaction":".createObjectStore('', { keyPath: '' });",
+            ".objectStore":".objectStore('');",
+            "":""
+    
+
+        };
+        function addbal(text) {
+            var textarea = document.querySelector("textarea");
+            var start = textarea.selectionStart;
+            var end = textarea.selectionEnd;
+            // Insérer le texte à la position du curseur
+            textarea.value = textarea.value.substring(0, start) + menu[text] + textarea.value.substring(end);
+            // Réinitialiser la position du curseur
+            textarea.selectionStart = textarea.selectionEnd = start + menu[text].length;
+            textarea.focus();
+        };
+        function copie(){
+            var textarea = document.querySelector("textarea");
+            var promise = navigator.clipboard.writeText(textarea.value);
+            alert("Votre code est pret à coller");
+        };
+        function litLS(){
+            var textarea = document.querySelector("textarea");
+            textarea.value = localStorage.getItem("pauledit");;
+        };
+        function ecritLS(){
+            var textarea = document.querySelector("textarea");
+            localStorage.setItem("pauledit", textarea.value);
+            alert("Votre programme est sauvé dans le localStorage");
+        };
+        function clearLS(){
+            var textarea = document.querySelector("textarea");
+            localStorage.removeItem("pauledit");
+            alert("Votre LocalStorage est effacé.");
+        };
+        function vd(){
+            var textarea = document.querySelector("textarea");
+            var start = textarea.selectionStart;
+            textarea.setSelectionRange(start + 1, start + 1);
+            textarea.focus();
+        };
+        function vg(){
+            var textarea = document.querySelector("textarea");
+            var start = textarea.selectionStart;
+            textarea.setSelectionRange(start - 1, start - 1);            
+            textarea.focus();
+        };
+		function sauve() {
+			var textarea = document.querySelector("textarea");
+			var typefile = document.getElementById("type");
+			var filename = document.getElementById("filename");
+			const blob = new Blob([textarea.value], { type: typefile });
+			const url = URL.createObjectURL(blob);
+			const downloadLink = document.createElement('a');
+			downloadLink.href = url;
+			downloadLink.download = filename.value;
+			document.body.appendChild(downloadLink); // Ajoute le lien au DOM temporairement
+			downloadLink.click(); // Simule un clic
+			document.body.removeChild(downloadLink); // Supprime le lien du DOM
+		
+		};
+
+    </script>
+</head>
+<body>
+    <div id="popfichier" popover="manual" class="pop">
+        <div class="close"><button popovertarget="popfichier" popovertargetaction="hide"> X </button></div>
+        <div>
+            <h2>Fichier</h2>
+                <button onclick="copie()">Copie</button>
+                <button onclick="litLS()">Lit LocalStorage</button>
+                <button onclick="ecritLS()">Ecrit dans LocalSotage</button>
+                <button onclick="clearLS()">Clear le LocalStorage</button>
+            <details>
+                <summary>
+				Sauve
+                </summary>
+				Nom : <input type="text" id="filename" value="Fichier.html"><br>
+				Type : <select name="type" id="type">
+					<option value="text/html">html</option>
+					<option value="text/css">css</option>
+					<option value="text/javascript">JavaScript</option>
+					<option value="text/plain">text</option>
+				</select><br>
+				<button onclick="sauve()">Sauve</button><button popovertarget="popfichier" popovertargetaction="hide">Annule</button>
+
+            </details>
+        </div>
+    </div>
+    <div id="popbloc" popover="manual" class="pop">
+        <div class="close"><button popovertarget="popbloc" popovertargetaction="hide"> X </button></div>
+        <div>
+            <h2>Balises de blocs</h2>
+            <button onclick="addbal('html')">html</button>
+            <button onclick="addbal('style')">style</button>
+            <button onclick="addbal('script')">script</button>
+            <button onclick="addbal('a')">a</button>
+            <button onclick="addbal('details')">details</button>
+            <button onclick="addbal('dialog')">dialog</button>
+            <button onclick="addbal('div')">div</button>
+            <button onclick="addbal('h1')">h1</button>
+            <button onclick="addbal('h2')">h2</button>
+            <button onclick="addbal('h3')">h3</button>
+            <button onclick="addbal('img')">img</button>
+            <button onclick="addbal('li')">li</button>
+            <button onclick="addbal('ol')">ol</button>
+            <button onclick="addbal('p')">p</button>            
+            <button onclick="addbal('progress')">progress</button>
+            <button onclick="addbal('section')">section</button>            
+            <button onclick="addbal('span')">span</button>            
+            <button onclick="addbal('table')">table</button>            
+            <button onclick="addbal('td')">td</button>            
+            <button onclick="addbal('th')">th</button>            
+            <button onclick="addbal('tr')">tr</button>            
+            <button onclick="addbal('ul')">ul</button>            
+            <button onclick="addbal('video')">video</button>            
+            <button onclick="addbal('popover')">popover</button>            
+        </div>
+    </div>
+    <div id="popform" popover="manual" class="pop">
+        <div class="close"><button popovertarget="popform" popovertargetaction="hide"> X </button></div>
+        <div>
+            <h2>Balises de formulaire</h2>
+                <button onclick="addbal('form')">form</button>
+                <button onclick="addbal('button')">button</button>
+                <button onclick="addbal('input/button')">input/button</button>
+                <button onclick="addbal('input/checkbox')">input/checkbox</button>
+                <button onclick="addbal('input/date')">input/date</button>
+                <button onclick="addbal('input/email')">input/email</button>
+                <button onclick="addbal('input/file')">input/file</button>
+                <button onclick="addbal('input/number')">input/number</button>
+                <button onclick="addbal('input/password')">input/password</button>
+                <button onclick="addbal('input/radio')">input/radio</button>
+                <button onclick="addbal('input/range')">input/range</button>
+                <button onclick="addbal('input/reset')">input/reset</button>
+                <button onclick="addbal('input/submit')">input/submit</button>
+                <button onclick="addbal('input/tel')">input/tel</button>
+                <button onclick="addbal('input/text')">input/text</button>
+                <button onclick="addbal('input/url')">input/url</button>
+                <button onclick="addbal('select')">select</button>
+                <button onclick="addbal('textarea')">textarea</button>
+
+        </div>
+    </div>
+    <div id="popcss" popover="manual" class="pop">
+        <div class="close"><button popovertarget="popcss" popovertargetaction="hide"> X </button></div>
+        <div>
+            <h2>Style</h2>
+                <button onclick="addbal('font-family')">font-family</button>
+                <button onclick="addbal('font-size')">font-size</button>
+                <button onclick="addbal('color')">color</button>
+                <button onclick="addbal('font-style')">font-style</button>
+                <button onclick="addbal('font-weight')">font-weight</button>
+                <button onclick="addbal('text-decoration')">text-decoration</button>
+                <button onclick="addbal('text-align')">text-align</button>
+                <button onclick="addbal('background')">background</button>
+                <button onclick="addbal('background-color')">background-color</button>
+                <button onclick="addbal('background-image')">background-image</button>
+                <button onclick="addbal('background-position')">background-position</button>
+                <button onclick="addbal('margin')">margin</button>
+                <button onclick="addbal('padding')">padding</button>
+                <button onclick="addbal('border')">border</button>
+                <button onclick="addbal('border-color')">border-color</button>
+                <button onclick="addbal('cursor')">cursor</button>
+                <button onclick="addbal('overflow')">overflow</button>
+                <button onclick="addbal('border-radius')">border-radius</button>
+
+        </div>
+    </div>
+    <div id="popjs" popover="manual" class="pop">
+        <div class="close"><button popovertarget="popjs" popovertargetaction="hide"> X </button></div>
+        <div>
+            <h2>Javascript</h2>
+            <details>
+                <summary>Général</summary>
+                <button onclick="addbal('if')">if</button>
+                <button onclick="addbal('switch')">switch</button>
+                <button onclick="addbal('for')">for</button>
+                <button onclick="addbal('while')">while</button>
+                <button onclick="addbal('.length')">.length</button>
+                <button onclick="addbal('.toUpperCase')">.toUpperCase</button>
+                <button onclick="addbal('.toLowerCase')">.toLowerCase</button>
+                <button onclick="addbal('.includes')">.includes</button>
+                <button onclick="addbal('.startsWith')">.startsWith</button>
+                <button onclick="addbal('.endsWith')">.endsWith</button>
+                <button onclick="addbal('.slice')">.slice</button>
+                <button onclick="addbal('.replace')">.replace</button>
+                <button onclick="addbal('.trim')">.trim</button>
+                <button onclick="addbal('.split')">.split</button>
+                <button onclick="addbal('``')">``</button>
+            </details>
+            <details>
+                <summary>Math</summary>
+                <button onclick="addbal('Math.PI')">Math.PI</button>
+                <button onclick="addbal('Math.round')">Math.round</button>
+                <button onclick="addbal('Math.ceil')">Math.ceil</button>
+                <button onclick="addbal('Math.floor')">Math.floor</button>
+                <button onclick="addbal('Math.pow')">Math.pow</button>
+                <button onclick="addbal('Math.sqrt')">Math.sqrt</button>
+                <button onclick="addbal('Math.random')">Math.random</button>
+                <button onclick="addbal('Number')">Number</button>
+                <button onclick="addbal('.toFixed')">.toFixed</button>
+            </details>
+            <details>
+                <summary>Tableau</summary>
+                <button onclick="addbal('.push')">.push</button>
+                <button onclick="addbal('.pop')">.pop</button>
+                <button onclick="addbal('.shift')">.shift</button>
+                <button onclick="addbal('.indexOf')">.indexOf</button>
+                <button onclick="addbal('.find')">.find</button>
+                <button onclick="addbal('.forEach')">.forEach</button>
+                <button onclick="addbal('.filter')">.filter</button>
+                <button onclick="addbal('.join')">.join</button>
+            </details>
+            <details>
+                <summary>DOM</summary>
+                <button onclick="addbal('getElementById')">getElementById</button>
+                <button onclick="addbal('getElementsByClassName')">getElementsByClassName</button>
+                <button onclick="addbal('getElementsByTagName')">getElementsByTagName</button>
+                <button onclick="addbal('querySelector')">querySelector</button>
+                <button onclick="addbal('querySelectorAll')">querySelectorAll</button>
+                <button onclick="addbal('.textContent')">.textContent</button>
+                <button onclick="addbal('.innerHTML')">.innerHTML</button>
+                <button onclick="addbal('.getAttribute')">.getAttribute</button>
+                <button onclick="addbal('.setAttribute')">.setAttribute</button>
+                <button onclick="addbal('.removeAttribute')">.removeAttribute</button>
+                <button onclick="addbal('.addEventListener')">.addEventListener</button>
+                <button onclick="addbal('.removeEventListener')">.removeEventListener</button>
+                <button onclick="addbal('.createElement')">.createElement</button>
+                <button onclick="addbal('.appendChild')">.appendChild</button>
+                <button onclick="addbal('.insertBefore')">.insertBefore</button>
+                <button onclick="addbal('.classList.add')">.classList.add</button>
+                <button onclick="addbal('.classList.remove')">.classList.remove</button>
+                <button onclick="addbal('.classList.toggle')">.classList.toggle</button>
+                <button onclick="addbal('.removeChild')">.removeChild</button>
+                <button onclick="addbal('.parentNode')">.parentNode</button>
+                <button onclick="addbal('.childNodes')">.childNodes</button>
+                <button onclick="addbal('.children')">.children</button>
+            </details>
+            <details>
+                <summary>
+                    Fct réseau
+                </summary>
+                <button onclick="addbal('XMLHttpRequest')">XMLHttpRequest</button>
+                <button onclick="addbal('.open')">.open</button>
+                <button onclick="addbal('.send')">.send</button>
+                <button onclick="addbal('lire XMLHttp...')">lire XMLHttp...</button>
+                <button onclick="addbal('fetch GET')">fetch GET</button>
+                <button onclick="addbal('fetch POST')">fetch POST</button>
+
+            </details>
+            <details>
+                <summary>
+                    Storage
+                </summary>
+                <button onclick="addbal('ls.clear')">ls.clear'</button>
+                <button onclick="addbal('ls.getItem')">ls.getItem</button>
+                <button onclick="addbal('ls.removeItem')">ls.removeItem</button>
+                <button onclick="addbal('ls.setItem')">ls.setItem</button>
+                <button onclick="addbal('ss.clear')">'ss.clear</button>
+                <button onclick="addbal('ss.getItem')">ss.getItem</button>
+                <button onclick="addbal('ss.removeItem')">ss.removeItem</button>
+                <button onclick="addbal('ss.setItem')">ss.setItem</button>
+                <button onclick="addbal('iDB.open')">iDB.open</button>
+                <button onclick="addbal('.onupgradeneeded')">.onupgradeneeded</button>
+                <button onclick="addbal('.createObjectStore')">.createObjectStore</button>
+                <button onclick="addbal('.transaction')">.transaction</button>
+                <button onclick="addbal('.objectStore')">.objectStore</button>
+
+            </details>
+        </div>
+    </div>
+
+
+
+    
+    <div>
+        <button popovertarget="popfichier" popovertargetaction="show">Fichier</button>
+        <button popovertarget="popbloc" popovertargetaction="show">Bloc</button>
+        <button popovertarget="popform" popovertargetaction="show">Formulaire</button>
+        <button popovertarget="popcss" popovertargetaction="show">CSS</button>
+        <button popovertarget="popjs" popovertargetaction="show">JS</button>
+
+        <button onclick="vg()">&#9664;</button>
+        <button onclick="vd()">&#9654;</button>
+
+    </div>
+
+    <textarea id="edit" rows="45" cols="45" spellcheck="false"></textarea><br>
+</body>
+</html>
